@@ -11,6 +11,7 @@ class Supplier extends Model {
       },
       {
         sequelize,
+        tableName: 'suppliers',
       }
     );
 

@@ -11,11 +11,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
       description: {
         type: Sequelize.TEXT,
         allowNull: false,
@@ -27,8 +22,20 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      supplier: {
+      supplier_id: {
         type: Sequelize.INTEGER,
+        references: { model: 'suppliers', key: 'id' },
+        onUptade: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: false,
+      },
+      categories: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      image: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
