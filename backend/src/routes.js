@@ -1,9 +1,10 @@
 import { Router } from 'express';
 
+import SupplierController from './app/controllers/SupplierController';
+
 const routes = new Router();
 
-routes.get('/', (_req, res) => {
-  return res.send('Hello World');
-});
+routes.post('/suppliers', SupplierController.store);
+routes.get('/suppliers', SupplierController.index);
 
 export default routes;
