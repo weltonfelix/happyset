@@ -48,6 +48,46 @@ class SupplierController {
 
     return res.json(suppliers);
   }
+
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().email().required(),
+      latitude: Yup.string().required(),
+      longitude: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.params))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+    const { id } = req.params;
+
+    const supplier = await Supplier.findByPk(id);
+
+    if (!supplier) {
+      return res.status(400).json({ error: 'Supplier already exists' });
+    }
+
+    const emailNotAvailable = await Supplier.findOne({
+      where: { email: req.body.email },
+    });
+
+    if (emailNotAvailable) {
+      return res.status(400).json({ error: 'Email not available' });
+    }
+
+    const { name, email, latitude, longitude } = await supplier.update(
+      req.body
+    );
+
+    return res.json({
+      id,
+      name,
+      email,
+      latitude,
+      longitude,
+    });
+  }
 }
 
 export default new SupplierController();
